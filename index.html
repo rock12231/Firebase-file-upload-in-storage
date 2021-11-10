@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-storage.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-12">
+                <h2>File Upload</h2>
+                <input type="file" onchange="uploadFile()" id="files" name="files[]" multiple>
+            </div>
+            <div class="progress col-lg-5 my-4">
+                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+            </div>
+            <div class="col-lg-12">
+                <h3>File List</h3>
+                <p id="demo"></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function uploadFile() {
+            var storageRef = firebase.storage().ref();
+            var file = document.getElementById("files").files[0];
+            console.log(file);
+            console.log(file.size,"size...");
+            var thisRef = storageRef.child(file.name);
+            thisRef.put(file).then(function (snapshot) {
+                alert("File Uploaded")
+                console.log('Uploaded a blob or file!');
+            });
+        }
+
+        //function fileList() {
+        const cars = ["BMW", "Volvo", "Saab", "Ford", "Fiat", "Audi"];
+        let text = "";
+        for (let i = 0; i < cars.length; i++) {
+            text += cars[i] + "<br>";
+        }
+        document.getElementById("demo").innerHTML = text;
+        //}
+    </script>
+</body>
+
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyA9DN6bJju_br_7kHa8kY8v9_G7efoKBKE",
+        authDomain: "file-9726b.firebaseapp.com",
+        databaseURL: "https://file-9726b-default-rtdb.firebaseio.com",
+        projectId: "file-9726b",
+        storageBucket: "file-9726b.appspot.com",
+        messagingSenderId: "283780116042",
+        appId: "1:283780116042:web:690994fbaf82a705bac0b3",
+        measurementId: "G-MTQ82VXEC2"
+    };
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+</script>
+
+</html>
